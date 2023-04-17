@@ -11,7 +11,8 @@ export default function Home() {
       <Header />
       <section className="relative bg-primaryOrange-50 text-white  ">
         <Image
-          className="absolute bottom-0 left-0"
+          priority
+          className="absolute -bottom-2 left-0 w-[245px] h-[365px]"
           width={245}
           height={365}
           src={

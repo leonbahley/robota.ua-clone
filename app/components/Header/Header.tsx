@@ -33,7 +33,7 @@ export default function Header() {
             fill="#fff"
           ></path>
         </svg>
-        <div className="hidden lg:flex gap-2">
+        <div className="hidden lg:flex lg:items-center gap-2">
           <Image
             width={175}
             height={30}
@@ -41,6 +41,7 @@ export default function Header() {
             alt="robota.ua"
           />
           <Image
+            className="w-[16px] h-[10px]"
             width={16}
             height={10}
             src={
