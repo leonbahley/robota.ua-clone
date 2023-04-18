@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { GoSearch } from "react-icons/go";
 
 export default function Searchbar() {
@@ -17,10 +18,13 @@ export default function Searchbar() {
           placeholder="What job would you like?"
         />
       </div>
-      <button className="justify-center border-2 rounded-md border-white flex gap-2 h-[60px] items-center px-9 xl:hover:bg-white xl:hover:text-primaryOrange-50 active:bg-white active:text-primaryOrange-50">
+      <Link
+        href={"search"}
+        className="justify-center border-2 rounded-md border-white flex gap-2 h-[60px] items-center px-9 xl:hover:bg-white xl:hover:text-primaryOrange-50 active:bg-white active:text-primaryOrange-50"
+      >
         <GoSearch size={20} />
         <span className="font-bold sm:hidden md:inline">Find job</span>
-      </button>
+      </Link>
     </div>
   );
 }

@@ -9,11 +9,13 @@ import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { CgAsterisk } from "react-icons/cg";
 import { MdOutlinePersonAdd } from "react-icons/md";
+import { FaBusinessTime } from "react-icons/fa";
 
 export default function RegisterEmployerPage() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const togglePassword = () => {
     setIsPasswordShown((prev) => !prev);
@@ -26,6 +28,25 @@ export default function RegisterEmployerPage() {
           Create an employer account
         </h1>
         <form className="flex flex-col gap-3 md:gap-5">
+          <div className="relative">
+            {!name && (
+              <CgAsterisk
+                color="red"
+                className="absolute top-1 md:top-3 left-[166px]"
+              />
+            )}
+            <FaBusinessTime
+              size={20}
+              className="opacity-50 absolute left-4 top-1/2 -translate-y-1/2"
+            />
+            <input
+              placeholder="Company name"
+              className="py-1 md:py-3 px-12 outline-none focus:border-black  border rounded-md w-full"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           <div className="relative">
             {!email && (
               <CgAsterisk
@@ -90,7 +111,7 @@ export default function RegisterEmployerPage() {
       </p>
 
       <Link
-        href={"/"}
+        href={"register/candidate"}
         className="text-primaryOrange-50 text-md font-bold flex gap-2 items-center w-fit mx-auto  mt-4"
       >
         <MdOutlinePersonAdd size={23} /> Create a candidate account

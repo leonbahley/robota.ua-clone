@@ -5,9 +5,9 @@ import Header from "../components/Header";
 
 export default function RecommendationsPage() {
   return (
-    <>
+    <div className="flex flex-col h-full">
       <Header />
-      <section className="bg-[#f2f5f8] pt-6 md:pt-8 pb-16 px-3">
+      <section className="grow bg-[#f2f5f8] pt-6 md:pt-8 pb-16 px-3">
         <div className="max-w-[750px] flex mx-auto justify-between">
           <div>
             <h1 className="font-extrabold text-xl md:text-2xl mb-7">
@@ -39,6 +39,6 @@ export default function RecommendationsPage() {
         </div>
       </section>
       <Footer />
-    </>
+    </div>
   );
 }

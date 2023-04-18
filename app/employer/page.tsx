@@ -195,7 +195,7 @@ export default function EmployerPage() {
             The largest announcement data base in Ukraine
           </p>
           <Image
-            className="absolute top-2 right-2"
+            className="absolute top-2 right-2 w-[80px] h-[70px] "
             width={80}
             height={70}
             alt="book"
@@ -225,7 +225,7 @@ export default function EmployerPage() {
             Highest awareness level between ukrainians
           </p>
           <Image
-            className="absolute top-2 right-2"
+            className="absolute top-2 right-2 w-[58px] h-[100px]"
             width={58}
             height={100}
             alt="book"

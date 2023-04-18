@@ -180,7 +180,7 @@ export default function RegisterEmployerPage() {
       </p>
 
       <Link
-        href={"/"}
+        href={"register/employer"}
         className="text-primaryOrange-50 text-md font-bold flex gap-2 items-center w-fit mx-auto  mt-4"
       >
         <MdOutlinePersonAdd size={23} /> Create an employer account

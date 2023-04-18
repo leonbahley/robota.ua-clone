@@ -20,22 +20,24 @@ export default function Header() {
     <>
       <header className="bg-primaryOrange-50 text-white pb-6 px-1">
         <div className="container mx-auto">
-          <div className="flex">
-            <svg
-              className="lg:hidden	"
-              width={30}
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 30 30"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M0 15C0 6.7275 6.7275 0 15 0C23.2725 0 30 6.7275 30 15C30 23.2725 23.2725 30 15 30C6.7275 30 0 23.2725 0 15ZM3 15C3 21.6154 8.38459 27 15 27C21.6154 27 27 21.6154 27 15C27 8.38457 21.6154 2.99998 15 2.99998C8.38459 2.99998 3 8.38457 3 15ZM14.9445 10.9699C16.113 9.71474 17.535 8.99999 19.4557 8.99999H20.3002V13.5555C15.7222 13.5555 14.9445 13.6219 14.9445 15.3112V21H10.5V8.99999H14.9445V10.9699Z"
-                fill="#fff"
-              ></path>
-            </svg>
-            <div className="hidden lg:flex lg:items-center gap-2">
+          <div className="flex items-center">
+            <Link href={"/"}>
+              <svg
+                className="lg:hidden	"
+                width={30}
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 30 30"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M0 15C0 6.7275 6.7275 0 15 0C23.2725 0 30 6.7275 30 15C30 23.2725 23.2725 30 15 30C6.7275 30 0 23.2725 0 15ZM3 15C3 21.6154 8.38459 27 15 27C21.6154 27 27 21.6154 27 15C27 8.38457 21.6154 2.99998 15 2.99998C8.38459 2.99998 3 8.38457 3 15ZM14.9445 10.9699C16.113 9.71474 17.535 8.99999 19.4557 8.99999H20.3002V13.5555C15.7222 13.5555 14.9445 13.6219 14.9445 15.3112V21H10.5V8.99999H14.9445V10.9699Z"
+                  fill="#fff"
+                ></path>
+              </svg>
+            </Link>
+            <Link href={"/"} className="hidden lg:flex lg:items-center gap-2">
               <Image
                 className="w-[117px] h-[30px]"
                 width={117}
@@ -52,24 +54,25 @@ export default function Header() {
                 }
                 alt="flag"
               />
-            </div>
+            </Link>
+
             <Link
               className="hidden md:flex items-center gap-2 text-sm  hover:bg-orange-700/25 transition px-4 py-5 font-extrabold ml-12"
-              href={"/"}
+              href={"recommendations"}
             >
               <FiThumbsUp size={25} />
               Recommended
             </Link>
             <Link
               className="hidden md:flex items-center gap-2 text-sm  hover:bg-orange-700/25 transition px-4 py-5 font-extrabold "
-              href={"/"}
+              href={"edit-cv"}
             >
               <HiDocumentText size={25} />
               My CV{" "}
             </Link>
             <Link
               className="hidden md:flex items-center gap-2 text-sm  hover:bg-orange-700/25 transition px-4 py-5 font-extrabold "
-              href={"/"}
+              href={"favorites"}
             >
               <AiFillStar size={25} />
               Favorites
@@ -90,9 +93,12 @@ export default function Header() {
               type="text"
               placeholder="Search by job title, company"
             />
-            <button className="border-white border-2 rounded-md py-2 px-3 hover:bg-white hover:text-primaryOrange-50 ">
-              <BsSearch className="mx-auto" />
-            </button>
+            <Link
+              href={"search"}
+              className="flex items-center justify-center border-white border-2 rounded-md py-2 px-3 hover:bg-white hover:text-primaryOrange-50 "
+            >
+              <BsSearch />
+            </Link>
           </div>
         </div>
       </header>
@@ -112,30 +118,35 @@ export default function Header() {
           email
         </span>
         <Link
+          onClick={() => setIsSidebarOpen(false)}
           className="mt-3 py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"/"}
+          href={"edit-cv"}
         >
           <HiDocumentText size={20} /> My CV
         </Link>
         <Link
+          onClick={() => setIsSidebarOpen(false)}
           className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"/"}
+          href={"favorites"}
         >
           <AiFillStar size={20} /> Favorites
         </Link>
         <Link
+          onClick={() => setIsSidebarOpen(false)}
           className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"/"}
+          href={"edit-profile"}
         >
           <FiEdit2 size={20} /> Profile settings
         </Link>
         <Link
+          onClick={() => setIsSidebarOpen(false)}
           className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"/"}
+          href={"recommendations"}
         >
           <FiThumbsUp size={20} /> Recommended
         </Link>
         <Link
+          onClick={() => setIsSidebarOpen(false)}
           className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
           href={"/"}
         >

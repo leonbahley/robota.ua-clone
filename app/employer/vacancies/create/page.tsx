@@ -13,7 +13,7 @@ export default function CreateVacancyPage() {
     <>
       <div className="container mx-auto py-5">
         <Link
-          href={"/"}
+          href={"employer/vacancies"}
           className="flex text-primaryOrange-50 items-center gap-3 font-extrabold mb-2"
         >
           <BiArrowBack size={25} />

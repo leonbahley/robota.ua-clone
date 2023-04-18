@@ -1,11 +1,12 @@
-import Footer from "@/app/components/Footer/Footer";
-import Image from "next/image";
 import Link from "next/link";
 
-export default function VacanciListPage() {
+import Footer from "@/app/components/Footer/Footer";
+import Image from "next/image";
+
+export default function VacancyListPage() {
   return (
     <>
-      <section className="bg-[#f3f5f8] pb-5 pt-9">
+      <section className="grow bg-[#f3f5f8] pb-5 pt-9">
         <div className="container flex mx-auto flex-col-reverse md:flex-row items-center">
           <div className="grow flex flex-col gap-5">
             <h1 className="font-extrabold text-3xl">
@@ -22,6 +23,7 @@ export default function VacanciListPage() {
             </Link>
           </div>
           <Image
+            priority
             className="w-[188px] h-[107px] md:w-[282px] md:h-[160px] mx-auto md:mx-0"
             src={
               "https://images.cf-rabota.com.ua/alliance/feature-vacancies/zero-vacancies-state-img.svg"

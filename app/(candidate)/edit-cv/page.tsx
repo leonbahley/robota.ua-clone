@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 import Header from "../components/Header";
 import { BiArrowBack } from "react-icons/bi";
@@ -12,6 +12,10 @@ import Footer from "@/app/components/Footer/Footer";
 
 export default function EditCVPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const saveData = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("e.target.elements.value", e.currentTarget.elements);
+  };
   return (
     <>
       <Header />
@@ -19,7 +23,7 @@ export default function EditCVPage() {
         <div className="container mx-auto">
           <Link
             className="hidden sm:flex gap-1 items-center font-extrabold text-primaryOrange-50 hover:text-orange-700 mb-4"
-            href={"/"}
+            href={"recommendations"}
           >
             <BiArrowBack size={23} />
             To recommended list
@@ -92,11 +96,95 @@ export default function EditCVPage() {
       </section>
       <Footer />
       <div
-        className={` fixed py-4   z-30 top-0 right-0 w-[100vw] md:w-[75vw] xl:w-[50vw] h-full bg-white transition ${
+        className={` fixed py-5 px-7 md:px-14 md:py-9  z-30 top-0 right-0 w-[100vw] md:w-[75vw] xl:w-[50vw] h-full bg-white transition ${
           !isSidebarOpen &&
           "translate-x-[103vw] md:translate-x-[78vw] xl:translate-x-[53vw] "
         } ${isSidebarOpen && "translate-x-0 "}`}
       >
+        <form
+          onSubmit={saveData}
+          className="h-full overflow-y-scroll flex flex-col gap-3 md:gap-6"
+        >
+          <div>
+            <h3 className="font-extrabold text-xl mb-3 md:mb-6">
+              Personal information <span className="text-red-600">*</span>
+            </h3>
+            <div className="flex flex-col gap-2 md:gap-5">
+              <input
+                placeholder="First and last name"
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
+                type="text"
+              />
+              <input
+                placeholder="Age"
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
+                type="text"
+              />
+              <input
+                placeholder="Location"
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
+                type="text"
+              />
+            </div>
+          </div>
+          <div>
+            <h3 className="font-extrabold text-xl mb-3 md:mb-6 ">
+              Contact information <span className="text-red-600">*</span>
+            </h3>
+            <div className="flex flex-col gap-2 md:gap-5">
+              <input
+                placeholder="E-mail"
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
+                type="text"
+              />
+              <input
+                placeholder="Phone number"
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
+                type="text"
+              />
+            </div>
+          </div>
+          <div>
+            <h3 className="font-extrabold text-xl mb-3 md:mb-6">
+              Desired position <span className="text-red-600">*</span>
+            </h3>
+            <div>
+              <input
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2 w-full"
+                type="text"
+              />
+            </div>
+          </div>
+          <div>
+            <h3 className="font-extrabold text-xl mb-3 md:mb-6">
+              Work experience <span className="text-red-600">*</span>
+            </h3>
+            <textarea
+              className="outline-none border border-black rounded-md resize-none overflow-auto
+              w-full px-2 py-1 md:px-4 md:py-2 min-h-[100px] md:min-h-[120px]"
+            />
+          </div>
+          <div>
+            <h3 className="font-extrabold text-xl mb-3 md:mb-6">
+              Education <span className="text-red-600">*</span>
+            </h3>
+            <textarea
+              className="outline-none border border-black rounded-md resize-none overflow-auto
+              w-full px-2 py-1 md:px-4 md:py-2 min-h-[100px] md:min-h-[120px]"
+            />
+          </div>
+          <div className=" flex flex-col md:flex-row gap-4 sticky bottom-0 bg-white ">
+            <button className="bg-primaryOrange-50 hover:bg-orange-700 text-white font-extrabold border border-transparent w-full py-2  md:py-3 rounded-md">
+              Save
+            </button>
+            <button
+              className="text-primaryOrange-50 border-2 border-primaryOrange-50 hover:border-orange-700 hover:text-orange-700 font-extrabold w-full py-2  md:py-3 rounded-md"
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
         <button
           className=" text-black/50 hover:text-black bg-white w-12 h-12 rounded-full absolute top-3 right-0 md:left-0 md:-translate-x-1/2"
           onClick={() => setIsSidebarOpen(false)}

@@ -26,14 +26,15 @@ export default function LoginPage() {
           >
             <RxCross1 size={30} color="#ff5252" />
           </Link>
-
-          <Image
-            className="mx-auto  "
-            src={"https://images.cf-rabota.com.ua/auth/logo-full.svg"}
-            alt="logo"
-            width={175}
-            height={30}
-          />
+          <Link href={"/"}>
+            <Image
+              className="mx-auto  "
+              src={"https://images.cf-rabota.com.ua/auth/logo-full.svg"}
+              alt="logo"
+              width={175}
+              height={30}
+            />
+          </Link>
         </div>
 
         <div className="rounded-md px-3 pb-3 pt-5 md:px-9 md:pb-9 md:pt-10 bg-white max-w-[600px] mx-auto">
@@ -148,7 +149,7 @@ export default function LoginPage() {
           </form>
         </div>
         <Link
-          href={"/"}
+          href={"register/candidate"}
           className="text-primaryOrange-50 text-md font-bold block text-center  mt-4"
         >
           Register
