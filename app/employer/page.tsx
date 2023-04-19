@@ -11,7 +11,7 @@ export default function EmployerPage() {
   return (
     <>
       <Header />
-      <section className=" bg-primaryOrange-50 text-white  p-10">
+      <section className="mt-[62px] relative bg-primaryOrange-50 text-white  p-10">
         <div className="container mx-auto flex flex-col items-center">
           <h1 className="font-extrabold text-4xl mb-4">
             robota.ua — working for you
@@ -188,60 +188,64 @@ export default function EmployerPage() {
           </div>
         </div>
       </section>
-      <section className="container mx-auto flex flex-col md:flex-row gap-4 py-5 px-2 sm:px-0">
-        <div className="border-2 pl-4 pr-9  py-8 rounded-md border-orange-600 relative grow shrink basis-0">
-          <h3 className="font-extrabold text-3xl text-orange-600">4,3 mln</h3>
-          <p className="text-lg mt-2">
-            The largest announcement data base in Ukraine
-          </p>
-          <Image
-            className="absolute top-2 right-2 w-[80px] h-[70px] "
-            width={80}
-            height={70}
-            alt="book"
-            src={
-              "https://images.cf-rabota.com.ua/2022/commercial-info/Document.svg"
-            }
-          />
-        </div>
-        <div className="border-2 pl-4 pr-9 py-8 rounded-md border-orange-600 relative grow shrink basis-0">
-          <h3 className="font-extrabold text-3xl text-orange-600">1,4 mln</h3>
-          <p className="text-lg mt-2">
-            Largest number of active candidates in a year
-          </p>
-          <Image
-            className="absolute top-2 right-2"
-            width={46}
-            height={113}
-            alt="book"
-            src={
-              "https://images.cf-rabota.com.ua/2022/commercial-info/Character.svg"
-            }
-          />
-        </div>
-        <div className="border-2 pl-4 pr-9 py-8 rounded-md border-orange-600 relative grow shrink basis-0">
-          <h3 className="font-extrabold text-3xl text-orange-600">89%</h3>
-          <p className="text-lg mt-2">
-            Highest awareness level between ukrainians
-          </p>
-          <Image
-            className="absolute top-2 right-2 w-[58px] h-[100px]"
-            width={58}
-            height={100}
-            alt="book"
-            src={
-              "https://images.cf-rabota.com.ua/2022/commercial-info/freepik--Medal--inject-144.png"
-            }
-          />
-        </div>
-      </section>
-      <section className="py-6 container mx-auto">
-        <h4 className="font-extrabold text-3xl">
-          We helped 60 thousand partners to find employees in 2020
-        </h4>
-        <PartnerList />
-      </section>
-      <EmblaCarousel />
+      <div className="relative bg-white">
+        <section className="container mx-auto flex flex-col md:flex-row gap-4 py-5 px-2 sm:px-0">
+          <div className="border-2 pl-4 pr-9  py-8 rounded-md border-orange-600 relative grow shrink basis-0">
+            <h3 className="font-extrabold text-3xl text-orange-600">4,3 mln</h3>
+            <p className="text-lg mt-2">
+              The largest announcement data base in Ukraine
+            </p>
+            <Image
+              className="absolute top-2 right-2 w-[80px] h-[70px] "
+              width={80}
+              height={70}
+              alt="book"
+              src={
+                "https://images.cf-rabota.com.ua/2022/commercial-info/Document.svg"
+              }
+            />
+          </div>
+          <div className="border-2 pl-4 pr-9 py-8 rounded-md border-orange-600 relative grow shrink basis-0">
+            <h3 className="font-extrabold text-3xl text-orange-600">1,4 mln</h3>
+            <p className="text-lg mt-2">
+              Largest number of active candidates in a year
+            </p>
+            <Image
+              className="absolute top-2 right-2"
+              width={46}
+              height={113}
+              alt="book"
+              src={
+                "https://images.cf-rabota.com.ua/2022/commercial-info/Character.svg"
+              }
+            />
+          </div>
+          <div className="border-2 pl-4 pr-9 py-8 rounded-md border-orange-600 relative grow shrink basis-0">
+            <h3 className="font-extrabold text-3xl text-orange-600">89%</h3>
+            <p className="text-lg mt-2">
+              Highest awareness level between ukrainians
+            </p>
+            <Image
+              className="absolute top-2 right-2 w-[58px] h-[100px]"
+              width={58}
+              height={100}
+              alt="book"
+              src={
+                "https://images.cf-rabota.com.ua/2022/commercial-info/freepik--Medal--inject-144.png"
+              }
+            />
+          </div>
+        </section>
+      </div>
+      <div className="relative bg-white">
+        <section className="py-6 container mx-auto">
+          <h4 className="font-extrabold text-3xl">
+            We helped 60 thousand partners to find employees in 2020
+          </h4>
+          <PartnerList />
+        </section>
+        <EmblaCarousel />
+      </div>
       <Footer />
     </>
   );

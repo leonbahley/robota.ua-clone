@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <section className="relative bg-primaryOrange-50 text-white  ">
+      <section className="mt-[62px] relative bg-primaryOrange-50 text-white  ">
         <Image
           priority
           className="absolute -bottom-2 left-0 w-[245px] h-[365px]"

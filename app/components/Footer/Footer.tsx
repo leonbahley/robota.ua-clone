@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="px-2 py-5 border-t">
+    <footer className="px-2 py-5 border-t relative bg-white">
       <div className="container mx-auto gap-10 flex items-start flex-col md:flex-row flex-wrap md:flex-nowrap">
         <Link href={"/"}>
           <svg

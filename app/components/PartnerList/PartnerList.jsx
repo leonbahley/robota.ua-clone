@@ -29,20 +29,22 @@ const partnerImages = [
 
 export default function PartnerList() {
   return (
-    <div className="container mx-auto">
-      <ul className="flex justify-around flex-wrap pt-10">
-        {partnerImages.map((item, i) => (
-          <li className="px-3 mb-9" key={i}>
-            <Image
-              className="block object-contain w-[120px] h-[60px]"
-              width={120}
-              height={60}
-              src={item}
-              alt="partner"
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <section className="relative bg-white">
+      <div className="container mx-auto ">
+        <ul className="flex justify-around flex-wrap pt-10">
+          {partnerImages.map((item, i) => (
+            <li className="px-3 mb-9" key={i}>
+              <Image
+                className="block object-contain w-[120px] h-[60px]"
+                width={120}
+                height={60}
+                src={item}
+                alt="partner"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
