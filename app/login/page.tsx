@@ -9,8 +9,10 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiKey } from "react-icons/fi";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
   const togglePassword = () => {
@@ -20,12 +22,13 @@ export default function LoginPage() {
     <div className="bg-gray-200 w-screen min-h-full pt-3 md:pt-16 ">
       <div>
         <div className="mb-4 md:mb-8 relative">
-          <Link
+          <button
+            onClick={() => router.back()}
             className="absolute right-5 md:right-10 top-1/2 -translate-y-1/2"
-            href={"/"}
           >
             <RxCross1 size={30} color="#ff5252" />
-          </Link>
+          </button>
+
           <Link href={"/"}>
             <Image
               className="mx-auto  "

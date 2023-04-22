@@ -7,9 +7,9 @@ import Footer from "./components/Footer/Footer";
 
 export default function Home() {
   return (
-    <>
+    <div className="min-h-full flex flex-col">
       <Header />
-      <section className="mt-[62px] relative bg-primaryOrange-50 text-white  ">
+      <section className=" relative bg-primaryOrange-50 text-white  ">
         <Image
           priority
           className="absolute -bottom-2 left-0 w-[245px] h-[365px]"
@@ -38,10 +38,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
+      <section className="grow">
         <PartnerList />
       </section>
       <Footer />
-    </>
+    </div>
   );
 }

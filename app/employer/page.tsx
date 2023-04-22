@@ -11,7 +11,7 @@ export default function EmployerPage() {
   return (
     <>
       <Header />
-      <section className="mt-[62px] relative bg-primaryOrange-50 text-white  p-10">
+      <section className=" relative bg-primaryOrange-50 text-white  p-10">
         <div className="container mx-auto flex flex-col items-center">
           <h1 className="font-extrabold text-4xl mb-4">
             robota.ua — working for you

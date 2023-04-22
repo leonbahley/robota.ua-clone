@@ -94,38 +94,21 @@ export default function RegisterLayout({
 
         <span className="flex justify-between px-6  pb-4 font-extrabold  border-b border-black/50">
           Name{" "}
-          <button>
+          <Link
+            onClick={() => setIsSidebarOpen(false)}
+            href={"employer/edit-profile"}
+          >
             <FiEdit2 size={20} />
-          </button>
+          </Link>
         </span>
         <Link
           onClick={() => setIsSidebarOpen(false)}
           className="mt-3 py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
           href={"edit-cv"}
         >
-          <HiDocumentText size={20} /> My CV
+          <HiDocumentText size={20} /> CVs and applications
         </Link>
-        <Link
-          onClick={() => setIsSidebarOpen(false)}
-          className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"favorites"}
-        >
-          <AiFillStar size={20} /> Favorites
-        </Link>
-        <Link
-          onClick={() => setIsSidebarOpen(false)}
-          className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"edit-profile"}
-        >
-          <FiEdit2 size={20} /> Profile settings
-        </Link>
-        <Link
-          onClick={() => setIsSidebarOpen(false)}
-          className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"recommendations"}
-        >
-          <FiThumbsUp size={20} /> Recommended
-        </Link>
+
         <Link
           onClick={() => setIsSidebarOpen(false)}
           className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "

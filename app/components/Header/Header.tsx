@@ -17,7 +17,7 @@ export default function Header() {
       ? "bg-slate-900/25"
       : "hover:bg-white hover:text-primaryOrange-50";
   return (
-    <header className="bg-primaryOrange-50 text-white  w-full fixed top-0 left-0">
+    <header className="bg-primaryOrange-50 text-white  w-full ">
       <div className="px-2 lg:px-28 py-4 flex items-center justify-between ">
         <Link href={"/"}>
           <svg

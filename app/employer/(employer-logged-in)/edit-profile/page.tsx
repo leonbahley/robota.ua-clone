@@ -2,26 +2,30 @@
 
 import { FormEvent, useState } from "react";
 
-import Header from "../components/Header";
 import { FiEdit2 } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
+import { BsPersonLock } from "react-icons/bs";
 import Footer from "@/app/components/Footer/Footer";
 
-export default function EditCVPage() {
+export default function EditProfilePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const saveData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("e.target.elements.value", e.currentTarget.elements);
   };
+
   return (
-    <div className="min-h-full flex flex-col">
-      <Header />
+    <>
       <section className="grow bg-[#f3f5f8] pb-12 pt-2 md:pt-6">
         <div className="container mx-auto">
           <h1 className="font-extrabold text-xl md:text-3xl mb-3">
             Profile settings
           </h1>
           <div className="max-w-[600px] bg-white rounded-md px-2 py-4 md:px-5 md:py-7 relative">
+            <p className="opacity-50 gap-2 items-center text-sm hidden lg:flex absolute bottom-[66px] -right-[390px]">
+              <BsPersonLock size={18} /> Contact information will be used by
+              robota.ua team
+            </p>
             <button
               onClick={() => setIsSidebarOpen(true)}
               className="items-center font-extrabold absolute hidden sm:flex gap-2 text-primaryOrange-50 hover:text-orange-700 top-[18px] right-[8px] md:top-[30px] md:right-[21px] z-10"
@@ -39,9 +43,14 @@ export default function EditCVPage() {
               Password: <span className="font-normal">dssdssdd</span>
             </p>
             <h2 className="font-extrabold text-xl mb-4  ">
-              Personal information <span className="text-red-600">*</span>
+              Company information <span className="text-red-600">*</span>
             </h2>
-            <p className="  font-extrabold">some text</p>
+            <p className="mb-3 md:mb-4 font-extrabold">
+              Name: <span className="font-normal">dssdssdd</span>
+            </p>
+            <p className=" font-extrabold">
+              Phone number: <span className="font-normal">38099949494</span>
+            </p>
           </div>
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -82,14 +91,21 @@ export default function EditCVPage() {
           </div>
           <div>
             <h3 className="font-extrabold text-xl mb-3 md:mb-6 ">
-              Personal information <span className="text-red-600">*</span>
+              Company information <span className="text-red-600">*</span>
             </h3>
 
-            <input
-              placeholder="First and last name"
-              className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2 w-full"
-              type="text"
-            />
+            <div className="flex flex-col gap-2 md:gap-5">
+              <input
+                placeholder="Name"
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
+                type="text"
+              />
+              <input
+                placeholder="Phone number"
+                className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
+                type="text"
+              />
+            </div>
           </div>
 
           <div className=" flex flex-col md:flex-row gap-4 sticky bottom-0 bg-white ">
@@ -97,6 +113,7 @@ export default function EditCVPage() {
               Save changes
             </button>
             <button
+              onClick={() => setIsSidebarOpen(false)}
               className="text-primaryOrange-50 border-2 border-primaryOrange-50 hover:border-orange-700 hover:text-orange-700 font-extrabold w-full py-2  md:py-3 rounded-md"
               type="button"
             >
@@ -116,6 +133,6 @@ export default function EditCVPage() {
           isSidebarOpen ? "block" : "hidden"
         } fixed inset-0 bg-black/40`}
       ></div>
-    </div>
+    </>
   );
 }
