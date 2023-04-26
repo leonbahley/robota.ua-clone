@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import { BsFillPersonFill } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
@@ -15,7 +15,9 @@ import { RxExit } from "react-icons/rx";
 import { FiThumbsUp } from "react-icons/fi";
 
 export default function Header() {
+  const session = useSession() as any;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
   return (
     <>
@@ -84,18 +86,20 @@ export default function Header() {
               onClick={() => setIsSidebarOpen(true)}
             >
               <BsFillPersonFill size={25} />
-              Name
+              {session.data?.user.user.name}
             </button>
           </div>
           <div className="flex flex-col sm:flex-row gap-5 relative">
             <BsSearch className="absolute top-1/2 left-4 -translate-y-1/2 text-black hidden sm:block" />
             <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               className="rounded-md py-2 text-black outline-none w-full pl-1 sm:pl-12 border border-transparent focus:border-black "
               type="text"
-              placeholder="Search by job title, company"
+              placeholder="Job title, company, location"
             />
             <Link
-              href={"search"}
+              href={`search/?query=${query}`}
               className="flex items-center justify-center border-white border-2 rounded-md py-2 px-3 hover:bg-white hover:text-primaryOrange-50 "
             >
               <BsSearch />

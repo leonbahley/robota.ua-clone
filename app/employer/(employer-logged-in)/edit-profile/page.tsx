@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { FiEdit2 } from "react-icons/fi";
@@ -27,14 +27,21 @@ export default function EditProfilePage() {
       body: JSON.stringify({ name, email, phoneNumber, password }),
     });
     if (res.ok) {
-      session.update({ info: { name, email, phoneNumber } });
+      session.update({
+        info: { ...session.data.user.user, name, email, phoneNumber },
+      });
     }
-    setName("");
-    setEmail("");
-    setPassword("");
-    setPhoneNumber("");
+
     setIsSidebarOpen(false);
   };
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setEmail(session.data?.user.user.email);
+      setName(session.data?.user.user.name);
+      session.data?.user.user.phoneNumber &&
+        setPhoneNumber(session.data?.user.user.phoneNumber);
+    }
+  }, [session]);
 
   return (
     <>

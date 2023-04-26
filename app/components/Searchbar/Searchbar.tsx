@@ -18,9 +18,9 @@ export default function Searchbar() {
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="px-12 h-[60px] rounded-md w-full text-black outline-none"
+          className="pl-12 pr-1 h-[60px] rounded-md w-full text-black outline-none"
           type="text"
-          placeholder="What job would you like?"
+          placeholder="Job title, company, location"
         />
       </div>
       <Link

@@ -7,8 +7,10 @@ import { BiArrowBack } from "react-icons/bi";
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function CreateVacancyPage() {
+  const router = useRouter();
   const session = useSession() as any;
   const [isWageRange, setIsWageRange] = useState(true);
   const [job, setJob] = useState("");
@@ -50,6 +52,9 @@ export default function CreateVacancyPage() {
       },
       body: JSON.stringify(vacancy),
     });
+    if (res.ok) {
+      router.push("employer/vacancies");
+    }
   };
   return (
     <>

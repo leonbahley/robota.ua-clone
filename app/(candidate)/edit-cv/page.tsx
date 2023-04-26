@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import Header from "../components/Header";
 import { BiArrowBack } from "react-icons/bi";
@@ -11,11 +12,72 @@ import { AiOutlineClose } from "react-icons/ai";
 import Footer from "@/app/components/Footer/Footer";
 
 export default function EditCVPage() {
+  const session = useSession() as any;
+
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [email, setEmail] = useState("");
+  const [age, setAge] = useState("");
+  const [education, setEducation] = useState("");
+  const [workExperience, setWorkExperience] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [desiredPosition, setDesiredPosition] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const saveData = (e: FormEvent<HTMLFormElement>) => {
+  const saveData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("e.target.elements.value", e.currentTarget.elements);
+    const res = await fetch("http://localhost:3001/update/cv", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${session.data?.user.token}`,
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phoneNumber,
+        age,
+        location,
+        education,
+        workExperience,
+        desiredPosition,
+      }),
+    });
+    if (res.ok) {
+      session.update({
+        info: {
+          ...session.data.user.user,
+          name,
+          email,
+          phoneNumber,
+          age,
+          location,
+          education,
+          workExperience,
+          desiredPosition,
+        },
+      });
+    }
+
+    setIsSidebarOpen(false);
   };
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setEmail(session.data?.user.user.email);
+      setName(session.data?.user.user.name);
+      session.data?.user.user.phoneNumber &&
+        setPhoneNumber(session.data?.user.user.phoneNumber);
+      session.data?.user.user.age && setAge(session.data?.user.user.age);
+      session.data?.user.user.location &&
+        setLocation(session.data?.user.user.location);
+      session.data?.user.user.education &&
+        setEducation(session.data?.user.user.education);
+      session.data?.user.user.workExperience &&
+        setWorkExperience(session.data?.user.user.workExperience);
+      session.data?.user.user.desiredPosition &&
+        setDesiredPosition(session.data?.user.user.desiredPosition);
+    }
+  }, [session]);
   return (
     <>
       <Header />
@@ -43,7 +105,17 @@ export default function EditCVPage() {
               </div>
               Personal information <span className="text-red-600">*</span>
             </h2>
-            <p className="mb-6 md:mb-10 font-extrabold">some text</p>
+            <p className="mb-1 font-extrabold">
+              {session.data?.user.user.name}
+            </p>
+            <p className="mb-1 font-extrabold">
+              <span className="font-normal">Age:</span>{" "}
+              {session.data?.user.user.age}
+            </p>
+            <p className="mb-6 md:mb-10 font-extrabold">
+              <span className="font-normal">Location:</span>{" "}
+              {session.data?.user.user.location}
+            </p>
             <h2 className="font-extrabold text-xl mb-4 relative lg:w-[1001px] xl:w-[1260px]">
               Contact information <span className="text-red-600">*</span>
               <div className="hidden  max-w-[400px] xl:max-w-[520px] absolute px-2 py-2 bg-[#e0e7ec] rounded-md gap-2 lg:flex  font-normal text-sm top-0 left-[668px]">
@@ -51,7 +123,10 @@ export default function EditCVPage() {
                 <span>Please add mandatory contact information</span>
               </div>
             </h2>
-            <p className="mb-6 md:mb-10">some text</p>
+            <p className="mb-1"> {session.data?.user.user.email}</p>
+            <p className="mb-6 md:mb-10">
+              Phone number: {session.data?.user.user.phoneNumber}
+            </p>
             <h2 className="font-extrabold text-xl mb-4 relative lg:w-[1001px] xl:w-[1260px]">
               <div className="hidden  max-w-[400px] xl:max-w-[520px] absolute px-2 py-2 bg-[#e0e7ec] rounded-md gap-2 lg:flex  font-normal text-sm top-0 left-[668px]">
                 <HiOutlineLightBulb className="shrink-0" size={20} />{" "}
@@ -62,7 +137,9 @@ export default function EditCVPage() {
               </div>
               Desired position <span className="text-red-600">*</span>
             </h2>
-            <p className="mb-6 md:mb-10">some text</p>
+            <p className="mb-6 md:mb-10">
+              {session.data?.user.user.desiredPosition}
+            </p>
             <h2 className="font-extrabold text-xl mb-4 relative lg:w-[1001px] xl:w-[1260px]">
               <div className="hidden  max-w-[400px] xl:max-w-[520px] absolute px-2 py-2 bg-[#e0e7ec] rounded-md gap-2 lg:flex  font-normal text-sm top-0 left-[668px]">
                 <HiOutlineLightBulb className="shrink-0" size={20} />{" "}
@@ -73,7 +150,10 @@ export default function EditCVPage() {
               </div>
               Work experience <span className="text-red-600">*</span>
             </h2>
-            <p className="mb-6 md:mb-10">some text</p>
+            <p className="mb-6 md:mb-10">
+              {session.data?.user.user.workExperience}
+            </p>
+
             <h2 className="font-extrabold text-xl mb-4 relative lg:w-[1001px] xl:w-[1260px]">
               <div className="hidden  max-w-[400px] xl:max-w-[520px] absolute px-2 py-2 bg-[#e0e7ec] rounded-md gap-2 lg:flex  font-normal text-sm top-0 left-[668px]">
                 <HiOutlineLightBulb className="shrink-0" size={20} />{" "}
@@ -83,7 +163,7 @@ export default function EditCVPage() {
               </div>
               Education <span className="text-red-600">*</span>
             </h2>
-            <p>some text</p>
+            <p>{session.data?.user.user.education}</p>
           </div>
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -111,16 +191,25 @@ export default function EditCVPage() {
             </h3>
             <div className="flex flex-col gap-2 md:gap-5">
               <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
                 placeholder="First and last name"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
               />
               <input
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                required
                 placeholder="Age"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
               />
               <input
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                required
                 placeholder="Location"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
@@ -133,11 +222,17 @@ export default function EditCVPage() {
             </h3>
             <div className="flex flex-col gap-2 md:gap-5">
               <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 placeholder="E-mail"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
               />
               <input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                required
                 placeholder="Phone number"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
@@ -150,6 +245,9 @@ export default function EditCVPage() {
             </h3>
             <div>
               <input
+                value={desiredPosition}
+                onChange={(e) => setDesiredPosition(e.target.value)}
+                required
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2 w-full"
                 type="text"
               />
@@ -160,6 +258,9 @@ export default function EditCVPage() {
               Work experience <span className="text-red-600">*</span>
             </h3>
             <textarea
+              value={workExperience}
+              onChange={(e) => setWorkExperience(e.target.value)}
+              required
               className="outline-none border border-black rounded-md resize-none overflow-auto
               w-full px-2 py-1 md:px-4 md:py-2 min-h-[100px] md:min-h-[120px]"
             />
@@ -169,6 +270,9 @@ export default function EditCVPage() {
               Education <span className="text-red-600">*</span>
             </h3>
             <textarea
+              value={education}
+              onChange={(e) => setEducation(e.target.value)}
+              required
               className="outline-none border border-black rounded-md resize-none overflow-auto
               w-full px-2 py-1 md:px-4 md:py-2 min-h-[100px] md:min-h-[120px]"
             />

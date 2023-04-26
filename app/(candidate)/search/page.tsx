@@ -1,11 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import Header from "../components/Header";
 import { VscPersonAdd } from "react-icons/vsc";
 import { AiOutlineStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 import Footer from "@/app/components/Footer/Footer";
 
 export default function SearchPage({
@@ -13,6 +15,7 @@ export default function SearchPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const session = useSession() as any;
   const router = useRouter();
   const [data, setData] = useState([]);
 
@@ -29,17 +32,67 @@ export default function SearchPage({
       }
     );
     const data = await res.json();
-    setData(data.vacancies);
+
+    if (res.status === 302) {
+      setData(data.vacancies);
+    }
   };
 
-  const handleClickOnItem = (e: MouseEvent) => {
-    const target = e.target as
-      | HTMLDivElement
-      | HTMLHeadingElement
-      | HTMLHeadingElement
-      | HTMLSpanElement;
-    if (target.id === "linkToItem") {
-      router.push(`/vacancy/?query=${}`);
+  const handleFavorite = async (id: string) => {
+    let path;
+    if (session.data?.user.user.favorites.includes(id)) {
+      path = "delete-from-favorites";
+    } else {
+      path = "add-to-favorites";
+    }
+    const res = await fetch(`http://localhost:3001/vacancies/${path}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${session.data?.user.token}`,
+      },
+      body: JSON.stringify({ id }),
+    });
+    if (res.ok) {
+      if (session.data?.user.user.favorites.includes(id)) {
+        const arr = [...session.data?.user.user.favorites];
+        const index = arr.indexOf(id);
+        arr.splice(index, 1);
+        session.update({
+          info: {
+            favorites: arr,
+          },
+        });
+      } else {
+        session.update({
+          info: {
+            ...session.data.user.user,
+            favorites: [...session.data?.user.user.favorites, id],
+          },
+        });
+      }
+    }
+  };
+
+  const apply = async (id: string) => {
+    const res = await fetch(
+      `http://localhost:3001/vacancies/add-to-applications`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.token}`,
+        },
+        body: JSON.stringify({ id }),
+      }
+    );
+    if (res.ok) {
+      session.update({
+        info: {
+          ...session.data.user.user,
+          applications: [...session.data?.user.user.applications, id],
+        },
+      });
     }
   };
 
@@ -57,7 +110,16 @@ export default function SearchPage({
                 <div
                   key={_id}
                   id="linkToItem"
-                  onClick={handleClickOnItem}
+                  onClick={(e) => {
+                    const target = e.target as
+                      | HTMLDivElement
+                      | HTMLHeadingElement
+                      | HTMLHeadingElement
+                      | HTMLSpanElement;
+                    if (target.id === "linkToItem") {
+                      router.push(`/vacancy/${_id}`);
+                    }
+                  }}
                   className="rounded-md bg-white p-4 hover:cursor-pointer shadow-md hover:shadow-lg"
                 >
                   <h2 id="linkToItem" className="font-extrabold text-xl mb-2">
@@ -69,20 +131,29 @@ export default function SearchPage({
                     <span id="linkToItem">{address}</span>
                   </div>
 
-                  <div className="flex gap-6 items-center text-primaryOrange-50 ">
+                  <div className="inline-flex gap-6 items-center text-primaryOrange-50 ">
+                    {!session.data?.user.user.applications?.includes(_id) ? (
+                      <button
+                        onClick={() => apply(_id)}
+                        className="flex font-extrabold items-center gap-2 hover:text-orange-700"
+                      >
+                        <VscPersonAdd size={23} />
+                        Apply
+                      </button>
+                    ) : (
+                      <p className="font-extrabold text-primaryOrange-50">
+                        Applied
+                      </p>
+                    )}
                     <button
-                      onClick={() => console.log("click on btn")}
-                      className="flex font-extrabold items-center gap-2 hover:text-orange-700"
-                    >
-                      <VscPersonAdd size={23} />
-                      Apply
-                    </button>
-                    <button
-                      onClick={(e) => console.log("click in start")}
+                      onClick={() => handleFavorite(_id)}
                       className="hover:text-orange-700"
                     >
-                      {" "}
-                      <AiOutlineStar size={23} />
+                      {!session.data?.user.user.favorites.includes(_id) ? (
+                        <AiOutlineStar size={23} />
+                      ) : (
+                        <AiFillStar size={23} />
+                      )}
                     </button>
                   </div>
                 </div>

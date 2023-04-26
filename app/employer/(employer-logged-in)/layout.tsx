@@ -104,7 +104,7 @@ export default function RegisterLayout({
         <Link
           onClick={() => setIsSidebarOpen(false)}
           className="mt-3 py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"/"}
+          href={"employer/feedback"}
         >
           <HiDocumentText size={20} /> CVs and applications
         </Link>

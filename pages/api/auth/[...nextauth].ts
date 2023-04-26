@@ -39,9 +39,17 @@ export default NextAuth({
     async jwt({ token, user, trigger, session }: any) {
       if (trigger === "update") {
         if (session.info) {
-          token.user.name = session.info.name;
-          token.user.email = session.info.email;
-          token.user.phoneNumber = session.info.phoneNumber;
+          token.user = session.info;
+          // token.user.name = session.info.name;
+          // token.user.email = session.info.email;
+          // token.user.phoneNumber = session.info.phoneNumber;
+          // token.user.age = session.info.age;
+          // token.user.location = session.info.location;
+          // token.user.education = session.info.education;
+          // token.user.workExperience = session.info.workExperience;
+          // token.user.desiredPosition = session.info.desiredPosition;
+          // token.user.favorites = session.info.favorites;
+          // token.user.applications = session.info.applications;
         }
       }
       return { ...token, ...user };

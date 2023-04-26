@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 import { AiOutlineMail } from "react-icons/ai";
 import { FiKey } from "react-icons/fi";
@@ -12,6 +14,7 @@ import { MdOutlinePersonAdd } from "react-icons/md";
 import { FaBusinessTime } from "react-icons/fa";
 
 export default function RegisterEmployerPage() {
+  const router = useRouter();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,13 +24,38 @@ export default function RegisterEmployerPage() {
     setIsPasswordShown((prev) => !prev);
   };
 
+  const sendData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await fetch("http://localhost:3001/auth/employer/sign-up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    });
+
+    if (res.ok) {
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      router.push("/employer/vacancies");
+    }
+  };
+
   return (
     <>
       <div className="rounded-md px-3 pb-3 pt-5 md:px-9 md:pb-9 md:pt-10 bg-white max-w-[600px] mx-auto">
         <h1 className="text-center font-extrabold text-2xl mb-3">
           Create an employer account
         </h1>
-        <form className="flex flex-col gap-3 md:gap-5">
+        <form onSubmit={sendData} className="flex flex-col gap-3 md:gap-5">
           <div className="relative">
             {!name && (
               <CgAsterisk
