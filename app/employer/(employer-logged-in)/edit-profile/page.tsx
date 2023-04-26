@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import { FiEdit2 } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
@@ -8,10 +9,31 @@ import { BsPersonLock } from "react-icons/bs";
 import Footer from "@/app/components/Footer/Footer";
 
 export default function EditProfilePage() {
+  const session = useSession() as any;
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const saveData = (e: FormEvent<HTMLFormElement>) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const saveData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("e.target.elements.value", e.currentTarget.elements);
+    const res = await fetch("http://localhost:3001/update/company-profile", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${session.data?.user.token}`,
+      },
+      body: JSON.stringify({ name, email, phoneNumber, password }),
+    });
+    if (res.ok) {
+      session.update({ info: { name, email, phoneNumber } });
+    }
+    setName("");
+    setEmail("");
+    setPassword("");
+    setPhoneNumber("");
+    setIsSidebarOpen(false);
   };
 
   return (
@@ -37,19 +59,31 @@ export default function EditProfilePage() {
               Log in data <span className="text-red-600">*</span>
             </h2>
             <p className="mb-3 md:mb-4 font-extrabold">
-              Email: <span className="font-normal">dssdssdd</span>
+              Email:{" "}
+              <span className="font-normal">
+                {session.data?.user.user.email}
+              </span>
             </p>
             <p className="mb-6 md:mb-10 font-extrabold">
-              Password: <span className="font-normal">dssdssdd</span>
+              Password:{" "}
+              <span className="font-normal">
+                You can change your password in the edit panel
+              </span>
             </p>
             <h2 className="font-extrabold text-xl mb-4  ">
               Company information <span className="text-red-600">*</span>
             </h2>
             <p className="mb-3 md:mb-4 font-extrabold">
-              Name: <span className="font-normal">dssdssdd</span>
+              Name:{" "}
+              <span className="font-normal">
+                {session.data?.user.user.name}
+              </span>
             </p>
             <p className=" font-extrabold">
-              Phone number: <span className="font-normal">38099949494</span>
+              Phone number:{" "}
+              <span className="font-normal">
+                {session.data?.user.user.phoneNumber}
+              </span>
             </p>
           </div>
           <button
@@ -78,11 +112,17 @@ export default function EditProfilePage() {
             </h3>
             <div className="flex flex-col gap-2 md:gap-5">
               <input
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
-                type="text"
+                type="email"
               />
               <input
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
@@ -96,11 +136,17 @@ export default function EditProfilePage() {
 
             <div className="flex flex-col gap-2 md:gap-5">
               <input
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
               />
               <input
+                required
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="Phone number"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"

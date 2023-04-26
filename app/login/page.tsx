@@ -3,20 +3,41 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { getSession, signIn } from "next-auth/react";
 
 import { RxCross1 } from "react-icons/rx";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiKey } from "react-icons/fi";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
   const togglePassword = () => {
     setIsPasswordShown((prev) => !prev);
+  };
+
+  const sendData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    if (result?.ok) {
+      const session = (await getSession()) as any;
+      console.log("session", session);
+      if (session.user.user.company) {
+        router.push("/employer/vacancies");
+      } else {
+        router.push("/recommendations");
+      }
+    }
   };
   return (
     <div className="bg-gray-200 w-screen min-h-full pt-3 md:pt-16 ">
@@ -44,7 +65,7 @@ export default function LoginPage() {
           <h1 className="text-center font-extrabold text-2xl mb-3">
             Log in on the website
           </h1>
-          <form className="flex flex-col gap-3 md:gap-5">
+          <form onSubmit={sendData} className="flex flex-col gap-3 md:gap-5">
             <div className="relative">
               <AiOutlineMail
                 size={20}
@@ -54,6 +75,8 @@ export default function LoginPage() {
                 placeholder="Email"
                 className="py-1 md:py-3 px-12 outline-none focus:border-black  border rounded-md w-full"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="relative">
@@ -62,6 +85,8 @@ export default function LoginPage() {
                 className="opacity-50 absolute left-4 top-1/2 -translate-y-1/2"
               />
               <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 className="py-1 md:py-3 px-12 outline-none focus:border-black  border rounded-md w-full"
                 type={isPasswordShown ? "password" : "text"}

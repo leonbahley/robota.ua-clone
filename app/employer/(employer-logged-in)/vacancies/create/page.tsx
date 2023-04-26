@@ -6,9 +6,51 @@ import { BiArrowBack } from "react-icons/bi";
 
 import Link from "next/link";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function CreateVacancyPage() {
+  const session = useSession() as any;
   const [isWageRange, setIsWageRange] = useState(true);
+  const [job, setJob] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [description, setDescription] = useState("");
+
+  const sendData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    let wage;
+    if (to) {
+      wage = `${from}-${to}`;
+    } else {
+      wage = from;
+    }
+    const vacancy = {
+      company: session.data.user.user.name,
+      name: job,
+      address: `${city} ${street}`,
+      wage,
+      description,
+    };
+    if (
+      !vacancy.name ||
+      !vacancy.address ||
+      !vacancy.wage ||
+      !vacancy.description
+    ) {
+      alert("Do not leave blank fields");
+      return;
+    }
+    const res = await fetch("http://localhost:3001/vacancies/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${session.data?.user.token}`,
+      },
+      body: JSON.stringify(vacancy),
+    });
+  };
   return (
     <>
       <div className="container mx-auto py-5">
@@ -29,6 +71,8 @@ export default function CreateVacancyPage() {
               <CgAsterisk color="red" />
             </h2>
             <input
+              value={job}
+              onChange={(e) => setJob(e.target.value)}
               className="outline-none w-full border rounded-md p-2 border-black"
               type="text"
               placeholder="Who are you looking for?"
@@ -41,14 +85,18 @@ export default function CreateVacancyPage() {
             </h2>
             <div className="flex flex-col md:flex-row gap-4 ">
               <input
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
                 className="outline-none  border rounded-md p-2 border-black min-w-[260px]"
                 type="text"
-                placeholder="Who are you looking for?"
+                placeholder="City"
               />
               <input
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
                 className="outline-none  border rounded-md p-2 border-black grow"
                 type="text"
-                placeholder="Who are you looking for?"
+                placeholder="Address"
               />
             </div>
           </div>
@@ -61,7 +109,11 @@ export default function CreateVacancyPage() {
               <div className="flex gap-4">
                 <button
                   type="button"
-                  onClick={() => setIsWageRange(false)}
+                  onClick={() => {
+                    setIsWageRange(false);
+                    setFrom("");
+                    setTo("");
+                  }}
                   className={`py-1 px-2 rounded-md text-sm ${
                     !isWageRange
                       ? "bg-[#f3f5f8]"
@@ -72,7 +124,11 @@ export default function CreateVacancyPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIsWageRange(true)}
+                  onClick={() => {
+                    setIsWageRange(true);
+                    setFrom("");
+                    setTo("");
+                  }}
                   className={`py-1 px-2 rounded-md text-sm ${
                     isWageRange
                       ? "bg-[#f3f5f8]"
@@ -87,11 +143,15 @@ export default function CreateVacancyPage() {
             {isWageRange ? (
               <div className="flex gap-4">
                 <input
+                  value={from}
+                  onChange={(e) => setFrom(e.target.value)}
                   className="outline-none w-full border rounded-md p-2 border-black"
                   type="text"
                   placeholder="From"
                 />
                 <input
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
                   className="outline-none w-full border rounded-md p-2 border-black"
                   type="text"
                   placeholder="To"
@@ -99,6 +159,8 @@ export default function CreateVacancyPage() {
               </div>
             ) : (
               <input
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
                 className="outline-none w-full border rounded-md p-2 border-black"
                 type="text"
                 placeholder="Tolal"
@@ -111,6 +173,8 @@ export default function CreateVacancyPage() {
               <CgAsterisk color="red" />
             </h2>
             <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="outline-none border rounded-md p-2 border-black w-full min-h-[150px] md:min-h-[300px] resize-none"
               name=""
             ></textarea>
@@ -118,7 +182,10 @@ export default function CreateVacancyPage() {
         </form>
       </div>
       <div className="shadow-md py-5 sticky border border-t-1  bottom-0 bg-white">
-        <button className="block max-w-[732px] w-full mx-auto p-5 text-white bg-primaryOrange-50 font-extrabold active:bg-orange-700 xl:hover:bg-orange-700 rounded-md ">
+        <button
+          onClick={sendData}
+          className="block max-w-[732px] w-full mx-auto p-5 text-white bg-primaryOrange-50 font-extrabold active:bg-orange-700 xl:hover:bg-orange-700 rounded-md "
+        >
           Publish
         </button>
       </div>

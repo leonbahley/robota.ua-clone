@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 import { AiOutlineClose } from "react-icons/ai";
-import { AiFillStar } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { RxExit } from "react-icons/rx";
-import { FiThumbsUp } from "react-icons/fi";
 import { HiDocumentText } from "react-icons/hi";
 import { BsFillBagDashFill } from "react-icons/bs";
 
@@ -18,6 +17,7 @@ export default function RegisterLayout({
   children: React.ReactNode;
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const session = useSession() as any;
 
   return (
     <>
@@ -71,7 +71,7 @@ export default function RegisterLayout({
               <BsFillBagDashFill size={22} />
               <div className="text-left">
                 <p className="text-[10px]">Your company</p>
-                <span className="text-sm">some company</span>
+                <span className="text-sm">{session.data?.user.user.name}</span>
               </div>
             </button>
           </div>
@@ -93,7 +93,7 @@ export default function RegisterLayout({
         </button>
 
         <span className="flex justify-between px-6  pb-4 font-extrabold  border-b border-black/50">
-          Name{" "}
+          {session.data?.user.user.name}
           <Link
             onClick={() => setIsSidebarOpen(false)}
             href={"employer/edit-profile"}
@@ -104,18 +104,20 @@ export default function RegisterLayout({
         <Link
           onClick={() => setIsSidebarOpen(false)}
           className="mt-3 py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"edit-cv"}
+          href={"/"}
         >
           <HiDocumentText size={20} /> CVs and applications
         </Link>
 
-        <Link
-          onClick={() => setIsSidebarOpen(false)}
+        <button
+          onClick={() => {
+            setIsSidebarOpen(false);
+            signOut();
+          }}
           className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"/"}
         >
           <RxExit size={20} /> Log out
-        </Link>
+        </button>
       </div>
       <div
         className={`z-20 h-screen ${

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 import { BsFillPersonFill } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
@@ -145,13 +146,15 @@ export default function Header() {
         >
           <FiThumbsUp size={20} /> Recommended
         </Link>
-        <Link
-          onClick={() => setIsSidebarOpen(false)}
+        <button
+          onClick={() => {
+            setIsSidebarOpen(false);
+            signOut();
+          }}
           className=" py-2 pl-6 flex gap-3 items-center hover:bg-primaryOrange-50/25 hover:text-primaryOrange-50 "
-          href={"/"}
         >
           <RxExit size={20} /> Log out
-        </Link>
+        </button>
       </div>
       <div
         className={`z-20 h-screen ${

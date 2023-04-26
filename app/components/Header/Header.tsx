@@ -4,10 +4,25 @@ import { FaKey } from "react-icons/fa";
 import { HiUserAdd } from "react-icons/hi";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function Header() {
+  const router = useRouter();
+  const session = useSession() as any;
+
+  useEffect(() => {
+    if (session.data) {
+      if (session.data.user.user.company) {
+        router.push("/employer/vacancies");
+      } else {
+        router.push("/recommendations");
+      }
+    }
+  }, [router, session.data]);
+
   const buttonConditionEmployee =
     usePathname() === "/"
       ? "bg-slate-900/25"
@@ -67,10 +82,13 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex gap-10">
-          <Link href={"login"} className={"flex items-center gap-2"}>
+          <button
+            onClick={() => signIn()}
+            className={"flex items-center gap-2"}
+          >
             <FaKey color="#fff" />
             <span className="hidden md:inline font-bold ">Log in</span>
-          </Link>
+          </button>
 
           {usePathname() === "/employer" && (
             <Link

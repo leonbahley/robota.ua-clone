@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "../components/Header/Header";
 import { HiUserAdd } from "react-icons/hi";
 import { HiOutlineDocumentText } from "react-icons/hi";
@@ -6,6 +8,7 @@ import Footer from "../components/Footer/Footer";
 import Image from "next/image";
 import PartnerList from "../components/PartnerList/PartnerList";
 import EmblaCarousel from "./components/Carousel/EmblaCarousel";
+import { signIn } from "next-auth/react";
 
 export default function EmployerPage() {
   return (
@@ -20,7 +23,10 @@ export default function EmployerPage() {
             Post an announcement for free. Thousands of candidates are waiting
             for it
           </h2>
-          <button className="bg-white text-black font-bold px-12 py-5 rounded-md active:opacity-75 xl:hover:opacity-75 mb-14">
+          <button
+            onClick={() => signIn()}
+            className="bg-white text-black font-bold px-12 py-5 rounded-md active:opacity-75 xl:hover:opacity-75 mb-14"
+          >
             Publish free announcement
           </button>
           <div className="flex flex-col lg:flex-row lg:gap-10">
