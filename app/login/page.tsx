@@ -37,6 +37,8 @@ export default function LoginPage() {
       } else {
         router.push("/recommendations");
       }
+    } else {
+      alert("Invalid email or password");
     }
   };
   return (
@@ -72,6 +74,7 @@ export default function LoginPage() {
                 className="opacity-50 absolute left-4 top-1/2 -translate-y-1/2"
               />
               <input
+                required
                 placeholder="Email"
                 className="py-1 md:py-3 px-12 outline-none focus:border-black  border rounded-md w-full"
                 type="email"
@@ -85,6 +88,7 @@ export default function LoginPage() {
                 className="opacity-50 absolute left-4 top-1/2 -translate-y-1/2"
               />
               <input
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"

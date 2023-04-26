@@ -3,6 +3,7 @@
 import Footer from "@/app/components/Footer/Footer";
 
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function FeedbackPage() {
@@ -52,17 +53,28 @@ export default function FeedbackPage() {
     <>
       {" "}
       <section className="grow bg-[#f3f5f8] pb-12 pt-2 md:pt-6">
-        {vacancies &&
-          vacancies.map(({ name, _id: vacId }) => (
-            <div key={vacId}>
-              {" "}
-              {name}
-              {candidates &&
-                candidates
-                  .filter(({ applications }) => applications.includes(vacId))
-                  .map(({ _id, name }) => <div key={_id}>{name}</div>)}
-            </div>
-          ))}
+        {vacancies && (
+          <div className="flex flex-col gap-5 max-w-[750px] mx-auto">
+            {vacancies.map(({ name, _id: vacId }) => (
+              <div
+                className="rounded-md bg-white p-4  shadow-md hover:shadow-lg"
+                key={vacId}
+              >
+                <span className="font-extrabold text-lg">{name}</span>
+                <p className="font-bold">Candidates:</p>
+
+                {candidates &&
+                  candidates
+                    .filter(({ applications }) => applications.includes(vacId))
+                    .map(({ _id, name }) => (
+                      <p key={_id}>
+                        <Link href={`employer/candidate/${_id}`}>{name}</Link>
+                      </p>
+                    ))}
+              </div>
+            ))}
+          </div>
+        )}
       </section>{" "}
       <Footer />
     </>

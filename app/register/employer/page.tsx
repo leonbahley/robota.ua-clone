@@ -46,6 +46,8 @@ export default function RegisterEmployerPage() {
       });
 
       router.push("/employer/vacancies");
+    } else {
+      alert("Try another email");
     }
   };
 
@@ -68,6 +70,7 @@ export default function RegisterEmployerPage() {
               className="opacity-50 absolute left-4 top-1/2 -translate-y-1/2"
             />
             <input
+              required
               placeholder="Company name"
               className="py-1 md:py-3 px-12 outline-none focus:border-black  border rounded-md w-full"
               type="text"
@@ -87,6 +90,7 @@ export default function RegisterEmployerPage() {
               className="opacity-50 absolute left-4 top-1/2 -translate-y-1/2"
             />
             <input
+              required
               placeholder="Email"
               className="py-1 md:py-3 px-12 outline-none focus:border-black  border rounded-md w-full"
               type="email"
@@ -106,6 +110,7 @@ export default function RegisterEmployerPage() {
               className="opacity-50 absolute left-4 top-1/2 -translate-y-1/2"
             />
             <input
+              required
               placeholder="Password"
               className="py-1 md:py-3 px-12 outline-none focus:border-black  border rounded-md w-full"
               type={!isPasswordShown ? "password" : "text"}

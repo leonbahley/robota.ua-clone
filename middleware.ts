@@ -43,6 +43,8 @@ export default withAuth(
 
 export const config = {
   matcher: [
+    "/employer/candidate/:path*",
+    "/employer/feedback/:path*",
     "/employer/edit-profile/:path*",
     "/employer/vacancies/:path*",
     "/edit-profile/:path*",

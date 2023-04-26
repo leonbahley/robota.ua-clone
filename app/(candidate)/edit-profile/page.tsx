@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import Header from "../components/Header";
 import { FiEdit2 } from "react-icons/fi";
@@ -8,10 +9,34 @@ import { AiOutlineClose } from "react-icons/ai";
 import Footer from "@/app/components/Footer/Footer";
 
 export default function EditCVPage() {
+  const session = useSession() as any;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const saveData = (e: FormEvent<HTMLFormElement>) => {
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setEmail(session.data?.user.user.email);
+      setName(session.data?.user.user.name);
+    }
+  }, [session]);
+
+  const saveData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("e.target.elements.value", e.currentTarget.elements);
+    const res = await fetch("http://localhost:3001/update/profile", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${session.data?.user.token}`,
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+    if (res.ok) {
+      session.update({
+        info: { ...session.data.user.user, name, email },
+      });
+    }
   };
   return (
     <div className="min-h-full flex flex-col">
@@ -33,15 +58,23 @@ export default function EditCVPage() {
               Log in data <span className="text-red-600">*</span>
             </h2>
             <p className="mb-3 md:mb-4 font-extrabold">
-              Email: <span className="font-normal">dssdssdd</span>
+              Email:{" "}
+              <span className="font-normal">
+                {" "}
+                {session.data?.user.user.email}
+              </span>
             </p>
             <p className="mb-6 md:mb-10 font-extrabold">
-              Password: <span className="font-normal">dssdssdd</span>
+              Password:{" "}
+              <span className="font-normal">
+                {" "}
+                You can change your password in the edit panel
+              </span>
             </p>
             <h2 className="font-extrabold text-xl mb-4  ">
               Personal information <span className="text-red-600">*</span>
             </h2>
-            <p className="  font-extrabold">some text</p>
+            <p className="  font-extrabold"> {session.data?.user.user.name}</p>
           </div>
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -69,11 +102,15 @@ export default function EditCVPage() {
             </h3>
             <div className="flex flex-col gap-2 md:gap-5">
               <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
-                type="text"
+                type="email"
               />
               <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2"
                 type="text"
@@ -86,6 +123,8 @@ export default function EditCVPage() {
             </h3>
 
             <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="First and last name"
               className="outline-none border border-black rounded-md px-2 py-1 md:px-4 md:py-2 w-full"
               type="text"
