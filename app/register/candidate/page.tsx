@@ -61,6 +61,7 @@ export default function RegisterEmployerPage() {
           <div>
             <div className="flex gap-4 text-white font-extrabold">
               <button
+                onClick={() => alert("Currently being developed")}
                 className="bg-blue-700 rounded-md flex py-3  px-2 w-full gap-2 justify-center"
                 type="button"
               >
@@ -78,6 +79,7 @@ export default function RegisterEmployerPage() {
                 Facebook
               </button>
               <button
+                onClick={() => alert("Currently being developed")}
                 className="bg-blue-600 rounded-md flex py-3 px-2 w-full gap-2 justify-center "
                 type="button"
               >
