@@ -7,6 +7,7 @@ import { BiArrowBack } from "react-icons/bi";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface IUser {
   name: string;
@@ -19,7 +20,8 @@ interface IUser {
   education: string;
 }
 
-export default function CandidatePage({ params }: { params: { id: string } }) {
+export default function CandidatePage() {
+  const params = useParams() as any;
   const [data, setData] = useState<IUser>();
   useEffect(() => {
     fetchCandidate();

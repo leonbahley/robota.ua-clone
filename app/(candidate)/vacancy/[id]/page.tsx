@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -20,17 +20,10 @@ interface IVacancy {
   company: string;
 }
 
-export default function VacancyItemPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function VacancyItemPage() {
+  const params = useParams() as any;
   const session = useSession() as any;
-  console.log(
-    "session.data.user.user.favorites",
-    session.data?.user.user.favorites
-  );
-  console.log("session", session);
+
   const [data, setData] = useState<IVacancy>();
   const router = useRouter();
 

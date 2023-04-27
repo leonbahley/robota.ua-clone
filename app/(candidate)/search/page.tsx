@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -12,11 +12,10 @@ import { AiOutlineStar } from "react-icons/ai";
 import { AiFillStar } from "react-icons/ai";
 import Footer from "@/app/components/Footer/Footer";
 
-export default function SearchPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const search = searchParams?.get("query");
+
   const session = useSession() as any;
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -28,7 +27,7 @@ export default function SearchPage({
 
   const fetchVacancies = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/search?query=${searchParams.query}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/search?query=${search}`,
       {
         cache: "no-store",
       }
