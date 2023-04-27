@@ -22,7 +22,7 @@ const VacancyListPage = () => {
 
   const fetchVacancies = async () => {
     const res = await fetch(
-      "http://localhost:3001/vacancies/company-vacancies",
+      `${process.env.API_URL}/vacancies/company-vacancies`,
       {
         headers: {
           Authorization: `bearer ${session.data?.user.token}`,

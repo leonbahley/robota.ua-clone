@@ -26,7 +26,7 @@ export default function CandidatePage({ params }: { params: { id: string } }) {
 
   const fetchCandidate = async () => {
     const res = await fetch(
-      `http://localhost:3001/vacancies/candidate/${params.id}`,
+      `${process.env.API_URL}/vacancies/candidate/${params.id}`,
       {
         cache: "no-store",
       }

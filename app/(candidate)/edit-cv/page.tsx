@@ -25,7 +25,7 @@ export default function EditCVPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const saveData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3001/update/cv", {
+    const res = await fetch(`${process.env.API_URL}/update/cv`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

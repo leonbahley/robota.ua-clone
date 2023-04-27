@@ -24,7 +24,7 @@ export default function EditCVPage() {
 
   const saveData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3001/update/profile", {
+    const res = await fetch(`${process.env.API_URL}/update/profile`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

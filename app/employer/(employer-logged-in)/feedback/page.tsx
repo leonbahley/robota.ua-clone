@@ -22,7 +22,7 @@ export default function FeedbackPage() {
 
   const fetchVacancies = async () => {
     const res = await fetch(
-      "http://localhost:3001/vacancies/company-vacancies",
+      `${process.env.API_URL}/vacancies/company-vacancies`,
       {
         headers: {
           Authorization: `bearer ${session.data?.user.token}`,
@@ -35,7 +35,7 @@ export default function FeedbackPage() {
   };
 
   const fetchCandidates = async () => {
-    const res = await fetch("http://localhost:3001/vacancies/candidates", {
+    const res = await fetch(`${process.env.API_URL}/vacancies/candidates`, {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",

@@ -18,7 +18,7 @@ export default function EditProfilePage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const saveData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3001/update/company-profile", {
+    const res = await fetch(`${process.env.API_URL}/update/company-profile`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

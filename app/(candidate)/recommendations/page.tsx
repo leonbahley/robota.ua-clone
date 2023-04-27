@@ -25,7 +25,7 @@ export default function RecommendationsPage() {
 
   const fetchVacancies = async () => {
     const res = await fetch(
-      `http://localhost:3001/vacancies/search?query=${session.data?.user.user.desiredPosition}`,
+      `${process.env.API_URL}/vacancies/search?query=${session.data?.user.user.desiredPosition}`,
       {
         cache: "no-store",
       }

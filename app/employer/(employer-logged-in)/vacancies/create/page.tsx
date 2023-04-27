@@ -44,7 +44,7 @@ export default function CreateVacancyPage() {
       alert("Do not leave blank fields");
       return;
     }
-    const res = await fetch("http://localhost:3001/vacancies/create", {
+    const res = await fetch(`${process.env.API_URL}/vacancies/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

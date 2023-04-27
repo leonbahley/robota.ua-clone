@@ -39,7 +39,7 @@ export default function VacancyItemPage({
 
   const fetchVacancy = async () => {
     const res = await fetch(
-      `http://localhost:3001/vacancies/search/${params.id}`,
+      `${process.env.API_URL}/vacancies/search/${params.id}`,
       {
         cache: "no-store",
       }
@@ -57,7 +57,7 @@ export default function VacancyItemPage({
     } else {
       path = "add-to-favorites";
     }
-    const res = await fetch(`http://localhost:3001/vacancies/${path}`, {
+    const res = await fetch(`${process.env.API_URL}/vacancies/${path}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export default function VacancyItemPage({
 
   const apply = async () => {
     const res = await fetch(
-      `http://localhost:3001/vacancies/add-to-applications`,
+      `${process.env.API_URL}/vacancies/add-to-applications`,
       {
         method: "PATCH",
         headers: {

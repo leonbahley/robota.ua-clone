@@ -26,7 +26,7 @@ export default function RegisterEmployerPage() {
 
   const sendData = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3001/auth/employee/sign-up", {
+    const res = await fetch(`${process.env.API_URL}/auth/employee/sign-up`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
