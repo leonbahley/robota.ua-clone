@@ -22,7 +22,7 @@ export default function FeedbackPage() {
 
   const fetchVacancies = async () => {
     const res = await fetch(
-      `${process.env.API_URL}/vacancies/company-vacancies`,
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/company-vacancies`,
       {
         headers: {
           Authorization: `bearer ${session.data?.user.token}`,
@@ -35,13 +35,16 @@ export default function FeedbackPage() {
   };
 
   const fetchCandidates = async () => {
-    const res = await fetch(`${process.env.API_URL}/vacancies/candidates`, {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${session.data?.user.token}`,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/candidates`,
+      {
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.token}`,
+        },
+      }
+    );
     const data = await res.json();
 
     if (res.status === 302) {

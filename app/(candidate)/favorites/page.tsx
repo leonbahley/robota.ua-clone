@@ -22,13 +22,16 @@ export default function SearchPage() {
   }, [session]);
 
   const fetchVacancies = async () => {
-    const res = await fetch(`${process.env.API_URL}/vacancies/favorites`, {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${session.data?.user.token}`,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/favorites`,
+      {
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.token}`,
+        },
+      }
+    );
     const data = await res.json();
 
     if (res.status === 302) {
@@ -43,14 +46,17 @@ export default function SearchPage() {
     } else {
       path = "add-to-favorites";
     }
-    const res = await fetch(`${process.env.API_URL}/vacancies/${path}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${session.data?.user.token}`,
-      },
-      body: JSON.stringify({ id }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/${path}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.token}`,
+        },
+        body: JSON.stringify({ id }),
+      }
+    );
     if (res.ok) {
       if (session.data?.user.user.favorites.includes(id)) {
         const arr = [...session.data?.user.user.favorites];
@@ -74,7 +80,7 @@ export default function SearchPage() {
 
   const apply = async (id: string) => {
     const res = await fetch(
-      `${process.env.API_URL}/vacancies/add-to-applications`,
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/add-to-applications`,
       {
         method: "PATCH",
         headers: {

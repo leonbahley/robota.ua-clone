@@ -26,17 +26,20 @@ export default function RegisterEmployerPage() {
 
   const sendData = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch(`${process.env.API_URL}/auth/employer/sign-up`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/employer/sign-up`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      }
+    );
 
     if (res.ok) {
       await signIn("credentials", {

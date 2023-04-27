@@ -44,14 +44,17 @@ export default function CreateVacancyPage() {
       alert("Do not leave blank fields");
       return;
     }
-    const res = await fetch(`${process.env.API_URL}/vacancies/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${session.data?.user.token}`,
-      },
-      body: JSON.stringify(vacancy),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.token}`,
+        },
+        body: JSON.stringify(vacancy),
+      }
+    );
     if (res.ok) {
       router.push("employer/vacancies");
     }

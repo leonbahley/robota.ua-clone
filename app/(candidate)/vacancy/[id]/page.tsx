@@ -39,7 +39,7 @@ export default function VacancyItemPage({
 
   const fetchVacancy = async () => {
     const res = await fetch(
-      `${process.env.API_URL}/vacancies/search/${params.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/search/${params.id}`,
       {
         cache: "no-store",
       }
@@ -57,14 +57,17 @@ export default function VacancyItemPage({
     } else {
       path = "add-to-favorites";
     }
-    const res = await fetch(`${process.env.API_URL}/vacancies/${path}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${session.data?.user.token}`,
-      },
-      body: JSON.stringify({ id: params.id }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/${path}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.token}`,
+        },
+        body: JSON.stringify({ id: params.id }),
+      }
+    );
     if (res.ok) {
       if (session.data?.user.user.favorites.includes(params.id)) {
         const arr = [...session.data?.user.user.favorites];
@@ -86,7 +89,7 @@ export default function VacancyItemPage({
 
   const apply = async () => {
     const res = await fetch(
-      `${process.env.API_URL}/vacancies/add-to-applications`,
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/add-to-applications`,
       {
         method: "PATCH",
         headers: {

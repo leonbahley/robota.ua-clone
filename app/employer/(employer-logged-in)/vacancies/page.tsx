@@ -22,7 +22,7 @@ const VacancyListPage = () => {
 
   const fetchVacancies = async () => {
     const res = await fetch(
-      `${process.env.API_URL}/vacancies/company-vacancies`,
+      `${process.env.NEXT_PUBLIC_API_URL}/vacancies/company-vacancies`,
       {
         headers: {
           Authorization: `bearer ${session.data?.user.token}`,

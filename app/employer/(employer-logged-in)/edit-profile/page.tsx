@@ -18,14 +18,17 @@ export default function EditProfilePage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const saveData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch(`${process.env.API_URL}/update/company-profile`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${session.data?.user.token}`,
-      },
-      body: JSON.stringify({ name, email, phoneNumber, password }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/update/company-profile`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.token}`,
+        },
+        body: JSON.stringify({ name, email, phoneNumber, password }),
+      }
+    );
     if (res.ok) {
       session.update({
         info: { ...session.data.user.user, name, email, phoneNumber },
